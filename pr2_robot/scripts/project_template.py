@@ -239,7 +239,7 @@ if __name__ == '__main__':
 
     
     # Load Model From disk
-     model = pickle.load(open('model.sav', 'rb'))
+    model = pickle.load(open('model.sav', 'rb'))
     clf = model['classifier']
     encoder = LabelEncoder()
     encoder.classes_ = model['classes']
