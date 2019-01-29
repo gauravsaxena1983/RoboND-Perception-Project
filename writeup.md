@@ -1,3 +1,12 @@
+[C-matrix]: ./images/C-matrix.png
+[C-matrix_2]: ./images/C-matrix_2.png
+[C-matrix_3]: ./images/C-matrix_3.png
+[ObjectRecognition]: ./images/ObjectRecognition.png
+[ObjectRecognition_2]: ./images/ObjectRecognition_2.png
+[ObjectRecognition_3]: ./images/ObjectRecognition_3.png
+[extracted_inliers]: ./images/extracted_inliers.png
+[extracted_outliers]: ./images/extracted_outliers.png
+
 ## Project: Perception Pick & Place
 ### Writeup Template: You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
 
@@ -126,6 +135,7 @@ seg.set_distance_threshold(max_distance)
 inliers, coefficients = seg.segment()
 ```
 
+![extracted_inliers] [extracted_inliers]
 Extract the inliners and save the pcd in file extracted_inliers.pcd.
 ```
 # Extract inliers
@@ -136,6 +146,7 @@ filename = 'extracted_inliers.pcd'
 pcl.save(extracted_inliers, filename)
 ```
 
+![extracted_outliers] [extracted_outliers]
 Extract the outliners and save the pcd in file extracted_outliers.pcd.
 ```
 # Extract outliers
