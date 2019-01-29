@@ -9,7 +9,7 @@
 [exercise_2_pcl_cluster]: ./images/exercise_2_pcl_cluster.png
 [exercise_2_point_cloud]: ./images/exercise_2_point_cloud.png
 [exercise_2_point_object]: ./images/exercise_2_point_object.png
-[exercise_2_point_table_new.png]: ./images/exercise_2_point_table_new.png.png
+[exercise_2_point_table_new]: ./images/exercise_2_point_table_new.png
 
 ## Project: Perception Pick & Place
 # Required Steps for a Passing Submission:
@@ -208,7 +208,7 @@ Applying RANSAC Plane Segmentation.
 
 Extracting inliers and outliers
 ![exercise_2_point_object][exercise_2_point_object]
-![exercise_2_point_table_new.png][exercise_2_point_table_new.png]
+![exercise_2_point_table_new][exercise_2_point_table_new]
 ```
     cloud_objects =  cloud_filtered.extract(inliers, negative=True)
     cloud_table = cloud_filtered.extract(inliers, negative=False)
