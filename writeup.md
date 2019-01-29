@@ -72,7 +72,7 @@ vox.set_leaf_size(LEAF_SIZE, LEAF_SIZE, LEAF_SIZE)
 cloud_filtered = vox.filter()
 ```
 
-Save the point cloud data after the vox filter 
+Save the point cloud data to file voxel_downsampled.pcd after applying the vox filter.
 ```
 filename = 'voxel_downsampled.pcd'
 pcl.save(cloud_filtered, filename)
