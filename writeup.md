@@ -6,6 +6,10 @@
 [ObjectRecognition_3]: ./images/ObjectRecognition_3.png
 [extracted_inliers]: ./images/extracted_inliers.png
 [extracted_outliers]: ./images/extracted_outliers.png
+[exercise_2_pcl_cluster]: ./images/exercise_2_pcl_cluster.png
+[exercise_2_point_cloud]: ./images/exercise_2_point_cloud.png
+[exercise_2_point_object]: ./images/exercise_2_point_object.png
+[exercise_2_point_table]: ./images/exercise_2_point_table.png
 
 ## Project: Perception Pick & Place
 # Required Steps for a Passing Submission:
@@ -168,6 +172,7 @@ def pcl_callback(pcl_msg):
 ```
 
 Converting ros message to pcl using mehtods defined in pcl_helper.py file.
+![exercise_2_point_cloud][exercise_2_point_cloud]
 ```
     cloud = ros_to_pcl(pcl_msg)
 ```
@@ -202,12 +207,15 @@ Applying RANSAC Plane Segmentation.
 ```
 
 Extracting inliers and outliers
+![exercise_2_point_object][exercise_2_point_object]
+![exercise_2_point_table][exercise_2_point_table]
 ```
     cloud_objects =  cloud_filtered.extract(inliers, negative=True)
     cloud_table = cloud_filtered.extract(inliers, negative=False)
 ```
 
 Applying Euclidean Clustering.
+
 ```
     white_cloud = XYZRGB_to_XYZ(cloud_objects)
     tree = white_cloud.make_kdtree()
@@ -225,6 +233,7 @@ Creating seprate random colours for each cluster.
 ```
 
 Creating colour cluster cloud from white colud using above colour list. 
+![exercise_2_pcl_cluster][exercise_2_pcl_cluster]
 ```
     color_cluster_point_list = []
 
