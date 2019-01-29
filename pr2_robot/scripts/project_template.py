@@ -57,33 +57,39 @@ def pcl_callback(pcl_msg):
 
     # Statistical Outlier Filtering
     outliner_filter = cloud.make_statistical_outlier_filter()
-    outliner_filter.set_mean_k(50)
-    outliner_filter.set_std_dev_mul_thresh(1.0)
+    outliner_filter.set_mean_k(3)
+    outliner_filter.set_std_dev_mul_thresh(0.00001)
     cloud = outliner_filter.filter()
 
 
     # Voxel Grid Downsampling
     vox = cloud.make_voxel_grid_filter()
-    LEAF_SIZE = 0.01 
+    LEAF_SIZE = 0.005 
     vox.set_leaf_size(LEAF_SIZE, LEAF_SIZE, LEAF_SIZE)
-    
+    cloud_filtered = vox.filter()
 
     # PassThrough Filter
-    cloud_filtered = vox.filter()
     passthrough = cloud_filtered.make_passthrough_filter()
     filter_axis = 'z'
     passthrough.set_filter_field_name(filter_axis)
-    axis_min = 0.6
+    axis_min = 0.6095
     axis_max = 1.1
     passthrough.set_filter_limits(axis_min, axis_max)
     cloud_filtered = passthrough.filter()
 
+    passthrough = cloud_filtered.make_passthrough_filter()
+    filter_axis = 'y'
+    passthrough.set_filter_field_name(filter_axis)
+    axis_min = -0.456
+    axis_max = 0.456
+    passthrough.set_filter_limits(axis_min, axis_max)
+    cloud_filtered = passthrough.filter()
 
     # RANSAC Plane Segmentation
     seg = cloud_filtered.make_segmenter()
     seg.set_model_type(pcl.SACMODEL_PLANE)
     seg.set_method_type(pcl.SAC_RANSAC)
-    max_distance = 0.01
+    max_distance = 0.006
     seg.set_distance_threshold(max_distance)
     inliers, coefficients = seg.segment()
 
@@ -93,13 +99,13 @@ def pcl_callback(pcl_msg):
     cloud_table = cloud_filtered.extract(inliers, negative=False)
 
     
-    # Euclidean Clustering
+    # Euclidean Clustering - finetune the parameters 
     white_cloud = XYZRGB_to_XYZ(cloud_objects)
     tree = white_cloud.make_kdtree()
     ec = white_cloud.make_EuclideanClusterExtraction()
-    ec.set_ClusterTolerance(0.1)
+    ec.set_ClusterTolerance(0.03)
     ec.set_MinClusterSize(10)
-    ec.set_MaxClusterSize(2500)
+    ec.set_MaxClusterSize(9000)
     ec.set_SearchMethod(tree)
     cluster_indices = ec.Extract()
 
@@ -162,7 +168,7 @@ def pcl_callback(pcl_msg):
 
         # Publish a label into RViz
         label_pos = list(white_cloud[pts_list[0]])
-        label_pos[2] += .4
+        label_pos[2] += .2 # corrcted the label distance
         object_markers_pub.publish(make_label(label,label_pos, index))
 
         # Add the detected object to the list of detected objects.
@@ -179,7 +185,7 @@ def pcl_callback(pcl_msg):
     # Could add some logic to determine whether or not your object detections are robust
     # before calling pr2_mover()
     try:
-        pr2_mover(detected_objects_list)
+        pr2_mover(detected_objects)
     except rospy.ROSInterruptException:
         pass
 
@@ -211,9 +217,9 @@ def pr2_mover(object_list):
             pick_place_routine = rospy.ServiceProxy('pick_place_routine', PickPlace)
 
             # TODO: Insert your message variables to be sent as a service request
-            resp = pick_place_routine(TEST_SCENE_NUM, OBJECT_NAME, WHICH_ARM, PICK_POSE, PLACE_POSE)
+            #resp = pick_place_routine(TEST_SCENE_NUM, OBJECT_NAME, WHICH_ARM, PICK_POSE, PLACE_POSE)
 
-            print ("Response: ",resp.success)
+            #print ("Response: ",resp.success)
 
         except rospy.ServiceException, e:
             print "Service call failed: %s"%e
@@ -236,18 +242,21 @@ if __name__ == '__main__':
     pcl_objects_pub = rospy.Publisher("/pcl_objects", PointCloud2, queue_size=1)
     pcl_table_pub = rospy.Publisher("/pcl_table", PointCloud2, queue_size=1)
     pcl_cluster_pub = rospy.Publisher("/pcl_cluster", PointCloud2, queue_size=1)
-
+    object_markers_pub   = rospy.Publisher("/object_markers"  , Marker,               queue_size=1)
+    detected_objects_pub = rospy.Publisher("/detected_objects", DetectedObjectsArray, queue_size=1)
     
-    # Load Model From disk
+    # Initialize color_list
+    get_color_list.color_list = []
+
+	
+	# Load Model From disk
     model = pickle.load(open('model.sav', 'rb'))
     clf = model['classifier']
     encoder = LabelEncoder()
     encoder.classes_ = model['classes']
     scaler = model['scaler']
 
-    # Initialize color_list
-    get_color_list.color_list = []
-
+    
 
     # TODO: Spin while node is not shutdown
     while not rospy.is_shutdown():
