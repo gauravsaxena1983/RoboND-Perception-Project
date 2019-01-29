@@ -92,10 +92,11 @@ cloud_filtered = passthrough.filter()
 passthrough = cloud_filtered.make_passthrough_filter()
 filter_axis = 'y'
 passthrough.set_filter_field_name(filter_axis)
-axis_min = -0.456
-axis_max = 0.456
+axis_min = -2
+axis_max = -1.4
 passthrough.set_filter_limits(axis_min, axis_max)
 cloud_filtered = passthrough.filter()
+
 ```
 
 Save the final pcd to file pass_through_filtered.pcd
@@ -103,8 +104,10 @@ Save the final pcd to file pass_through_filtered.pcd
 # Finally use the filter function to obtain the resultant point cloud. 
 filename = 'pass_through_filtered.pcd'
 pcl.save(cloud_filtered, filename)
+```
 
-
+Now apply the RANSAC plane segmentation
+```
 # RANSAC plane segmentation
 # Create the segmentation object
 seg = cloud_filtered.make_segmenter()
@@ -121,16 +124,20 @@ seg.set_distance_threshold(max_distance)
 
 # Call the segment function to obtain set of inlier indices and model coefficients
 inliers, coefficients = seg.segment()
+```
 
-
+Extract the inliners and save the pcd in file extracted_inliers.pcd.
+```
 # Extract inliers
 extracted_inliers = cloud_filtered.extract(inliers, negative=False)
 filename = 'extracted_inliers.pcd'
 
 # Save pcd for table
 pcl.save(extracted_inliers, filename)
+```
 
-
+Extract the outliners and save the pcd in file extracted_outliers.pcd.
+```
 # Extract outliers
 extracted_outliers = cloud_filtered.extract(inliers, negative=True)
 filename = 'extracted_outliers.pcd'
