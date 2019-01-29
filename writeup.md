@@ -8,11 +8,6 @@
 [extracted_outliers]: ./images/extracted_outliers.png
 
 ## Project: Perception Pick & Place
-### Writeup Template: You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
-
-
 # Required Steps for a Passing Submission:
 1. Extract features and train an SVM model on new objects (see `pick_list_*.yaml` in `/pr2_robot/config/` for the list of models you'll be trying to identify). 
 2. Write a ROS node and subscribe to `/pr2/world/points` topic. This topic contains noisy point cloud data that you must work with.
@@ -98,6 +93,7 @@ axis_max = 1.1
 passthrough.set_filter_limits(axis_min, axis_max)
 cloud_filtered = passthrough.filter()
 
+# Assign y axis and range to the passthrough filter object. Needed as i see front of the table in the pcd file
 passthrough = cloud_filtered.make_passthrough_filter()
 filter_axis = 'y'
 passthrough.set_filter_field_name(filter_axis)
