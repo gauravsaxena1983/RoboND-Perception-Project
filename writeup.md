@@ -29,7 +29,7 @@
 13. Looking for a bigger challenge?  Load up the `challenge.world` scenario and see if you can get your perception pipeline working there!
 
 ### Exercise 1, 2 and 3 pipeline implemented
-#### 1. Complete Exercise 1 steps. Pipeline for filtering and RANSAC plane fitting implemented.
+#### 1. Complete Exercise 1 steps. Pipeline for filtering and RANSAC plane fitting implemented. [Exercise 1 Code](https://github.com/gauravsaxena1983/RoboND-Perception-Exercises/tree/master/Exercise-1)
 
 First we import the pcl library.
 ```
