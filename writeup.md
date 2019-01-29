@@ -24,19 +24,120 @@
 12. Place all the objects from your pick list in their respective dropoff box and you have completed the challenge!
 13. Looking for a bigger challenge?  Load up the `challenge.world` scenario and see if you can get your perception pipeline working there!
 
-## [Rubric](https://review.udacity.com/#!/rubrics/1067/view) Points
-### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
-
----
-### Writeup / README
-
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  
-
-You're reading it!
-
 ### Exercise 1, 2 and 3 pipeline implemented
 #### 1. Complete Exercise 1 steps. Pipeline for filtering and RANSAC plane fitting implemented.
 
+First we import the pcl library.
+```
+# Import PCL module
+import pcl
+```
+
+Next we load the pcd file tabletop.pcd using pcl.load_XYZRGB function
+```
+# Load Point Cloud file
+cloud = pcl.load_XYZRGB('tabletop.pcd')
+```
+
+Next we do statistical outlier filter to remove the noice.
+```
+# statistical_outlier_filter
+statistical_outlier_filter = cloud.make_statistical_outlier_filter()
+statistical_outlier_filter.set_mean_k(50)
+statistical_outlier_filter.set_std_dev_mul_thresh(1.0)
+
+cloud = statistical_outlier_filter.filter()
+```
+
+Next we apply Voxel Grid filter.
+```
+# Voxel Grid filter
+
+# Create a VoxelGrid filter object for our input point cloud
+vox = cloud.make_voxel_grid_filter()
+
+# Choose a voxel (also known as leaf) size
+# Note: this (1) is a poor choice of leaf size   
+# Experiment and find the appropriate size!
+LEAF_SIZE =   0.01
+
+# Set the voxel (or leaf) size  
+vox.set_leaf_size(LEAF_SIZE, LEAF_SIZE, LEAF_SIZE)
+
+# Call the filter function to obtain the resultant downsampled point cloud
+cloud_filtered = vox.filter()
+```
+
+Save the point cloud data after the vox filter 
+```
+filename = 'voxel_downsampled.pcd'
+pcl.save(cloud_filtered, filename)
+
+```
+
+Make a pass through filter on z and y axis to remove the table from the pcd.
+```
+# PassThrough filter
+# Create a PassThrough filter object.
+passthrough = cloud_filtered.make_passthrough_filter()
+
+# Assign axis and range to the passthrough filter object.
+filter_axis = 'z'
+passthrough.set_filter_field_name(filter_axis)
+axis_min = 0.6
+axis_max = 1.1
+passthrough.set_filter_limits(axis_min, axis_max)
+cloud_filtered = passthrough.filter()
+
+passthrough = cloud_filtered.make_passthrough_filter()
+filter_axis = 'y'
+passthrough.set_filter_field_name(filter_axis)
+axis_min = -0.456
+axis_max = 0.456
+passthrough.set_filter_limits(axis_min, axis_max)
+cloud_filtered = passthrough.filter()
+```
+
+Save the final pcd to file pass_through_filtered.pcd
+```
+# Finally use the filter function to obtain the resultant point cloud. 
+filename = 'pass_through_filtered.pcd'
+pcl.save(cloud_filtered, filename)
+
+
+# RANSAC plane segmentation
+# Create the segmentation object
+seg = cloud_filtered.make_segmenter()
+
+# Set the model you wish to fit 
+seg.set_model_type(pcl.SACMODEL_PLANE)
+seg.set_method_type(pcl.SAC_RANSAC)
+
+# Max distance for a point to be considered fitting the model
+# Experiment with different values for max_distance 
+# for segmenting the table
+max_distance = 0.01
+seg.set_distance_threshold(max_distance)
+
+# Call the segment function to obtain set of inlier indices and model coefficients
+inliers, coefficients = seg.segment()
+
+
+# Extract inliers
+extracted_inliers = cloud_filtered.extract(inliers, negative=False)
+filename = 'extracted_inliers.pcd'
+
+# Save pcd for table
+pcl.save(extracted_inliers, filename)
+
+
+# Extract outliers
+extracted_outliers = cloud_filtered.extract(inliers, negative=True)
+filename = 'extracted_outliers.pcd'
+
+# Save pcd for tabletop objects
+pcl.save(extracted_outliers, filename)
+```
 #### 2. Complete Exercise 2 steps: Pipeline including clustering for segmentation implemented.  
 
 #### 2. Complete Exercise 3 Steps.  Features extracted and SVM trained.  Object recognition implemented.
