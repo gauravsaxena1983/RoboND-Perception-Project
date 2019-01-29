@@ -187,11 +187,12 @@ def pcl_callback(pcl_msg):
     try:
         pr2_mover(detected_objects)
     except rospy.ROSInterruptException:
+        print "Service call failed:"
         pass
 
 # function to load parameters and request PickPlace service
 def pr2_mover(object_list):
-
+    print('inside pr2_mover')
     # Initialize variables
     test_scene_num = Int32()
     object_name    = String()
@@ -199,7 +200,7 @@ def pr2_mover(object_list):
     place_pose     = Pose()
     arm_name       = String()
     yaml_dict_list = []
-    test_scene_num.data = 1
+    test_scene_num.data = 3
 
     #Get/Read parameters
     object_list_param = rospy.get_param('/object_list')
@@ -250,7 +251,7 @@ def pr2_mover(object_list):
             # Insert your message variables to be sent as a service request
             resp = pick_place_routine(test_scene_num, object_name, arm_name, pick_pose, place_pose)
 
-            #print ("Response: ",resp.success)
+            print ("Response: ",resp.success)
 
         except rospy.ServiceException, e:
             print "Service call failed: %s"%e
