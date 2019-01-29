@@ -135,7 +135,7 @@ seg.set_distance_threshold(max_distance)
 inliers, coefficients = seg.segment()
 ```
 
-![extracted_inliers] [extracted_inliers]
+![extracted_inliers][extracted_inliers]
 Extract the inliners and save the pcd in file extracted_inliers.pcd.
 ```
 # Extract inliers
@@ -146,7 +146,7 @@ filename = 'extracted_inliers.pcd'
 pcl.save(extracted_inliers, filename)
 ```
 
-![extracted_outliers] [extracted_outliers]
+![extracted_outliers][extracted_outliers]
 Extract the outliners and save the pcd in file extracted_outliers.pcd.
 ```
 # Extract outliers
