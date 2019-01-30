@@ -350,14 +350,35 @@ Later we added the code to predict the object and label them and publish it back
 
 #### 1. For all three tabletop setups (`test*.world`), perform object recognition, then read in respective pick list (`pick_list_*.yaml`). Next construct the messages that would comprise a valid `PickPlace` request output them to `.yaml` format.
 
+Running the 3 worlds tests
+======
+
+Test World 1 
+------
+Image of Confusion Matix with Feature Set details.
 ![C-matrix]
+Image of Pridicted Objects.
 ![ObjectRecognition]
+Output yaml.
+![output_3.yaml](https://github.com/gauravsaxena1983/RoboND-Perception-Project/blob/master/output_yaml/output_3.yaml)
 
+Test World 2
+------
+Image of Confusion Matix with Feature Set details.
 ![C-matrix_2]
+Image of Pridicted Objects.
 ![ObjectRecognition_2]
+Output yaml.
+![output_2.yaml](https://github.com/gauravsaxena1983/RoboND-Perception-Project/blob/master/output_yaml/output_2.yaml)
 
+Test World 3
+------
+Image of Confusion Matix with Feature Set details.
 ![C-matrix_3]
+Image of Pridicted Objects.
 ![ObjectRecognition_3]
+Output yaml.
+![output_3.yaml](https://github.com/gauravsaxena1983/RoboND-Perception-Project/blob/master/output_yaml/output_3.yaml)
 
 Spend some time at the end to discuss your code, what techniques you used, what worked and why, where the implementation might fail and how you might improve it if you were going to pursue this project further.  
 
