@@ -302,10 +302,10 @@ Spining while node is not shutdown
 ```
 #### 3. Complete Exercise 3 Steps.  Features extracted and SVM trained.  Object recognition implemented. [Exercise 3 Code](https://github.com/gauravsaxena1983/RoboND-Perception-Exercises/tree/master/Exercise-3)
 
-In exercise we again fing the features from the models and train the data. 
+In exercise 3 we follow all the steps present in Exercise 1 and 2 to find the features from the models and train the data. 
 ![exercise_3_tarin_confusion_matrix][exercise_3_tarin_confusion_matrix]
 
-Later we added the code to predict the object and label it.
+Later we added the code to predict the object and label them and publish it back into the perception pipeline. 
 ![exercise_3_object_taging][exercise_3_object_taging]
 ```
 # Exercise-3: 
