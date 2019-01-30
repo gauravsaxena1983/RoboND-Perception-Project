@@ -356,10 +356,10 @@ Following thing needed to be done to run the project successfully
 2. Change the world seeting in the launch file for each world.
 3. Add code to project_template.py from exercise 1, 2, 3 and add code to  PR2_Mover function.
 4. Run the project and fine tune the diffrent parameters for this configurations. 
-    a. Change LEAF_SIZE for Voxel Grid Downsampling.
-    b. Change axis_min and asix_max of z and y axix for PassThrough Filter.
-    c. Change max_distance for RANSAC Plane Segmentation.
-    d. Change ClusterTolerance, MinClusterSize and MaxClusterSize for Euclidean Clustering.
+    1. Change LEAF_SIZE for Voxel Grid Downsampling.
+    2. Change axis_min and asix_max of z and y axix for PassThrough Filter.
+    3. Change max_distance for RANSAC Plane Segmentation.
+    4. Change ClusterTolerance, MinClusterSize and MaxClusterSize for Euclidean Clustering.
 
 Below are the results of test run on diffrent worls set.
 
