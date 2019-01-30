@@ -360,7 +360,7 @@ Image of Confusion Matix with Feature Set details.
 Image of Pridicted Objects.
 ![ObjectRecognition]
 Output yaml.
-![output_3.yaml](https://github.com/gauravsaxena1983/RoboND-Perception-Project/blob/master/output_yaml/output_3.yaml)
+[output_3.yaml](https://github.com/gauravsaxena1983/RoboND-Perception-Project/blob/master/output_yaml/output_3.yaml)
 
 Test World 2
 ------
@@ -369,7 +369,7 @@ Image of Confusion Matix with Feature Set details.
 Image of Pridicted Objects.
 ![ObjectRecognition_2]
 Output yaml.
-![output_2.yaml](https://github.com/gauravsaxena1983/RoboND-Perception-Project/blob/master/output_yaml/output_2.yaml)
+[output_2.yaml](https://github.com/gauravsaxena1983/RoboND-Perception-Project/blob/master/output_yaml/output_2.yaml)
 
 Test World 3
 ------
@@ -378,7 +378,7 @@ Image of Confusion Matix with Feature Set details.
 Image of Pridicted Objects.
 ![ObjectRecognition_3]
 Output yaml.
-![output_3.yaml](https://github.com/gauravsaxena1983/RoboND-Perception-Project/blob/master/output_yaml/output_3.yaml)
+[output_3.yaml](https://github.com/gauravsaxena1983/RoboND-Perception-Project/blob/master/output_yaml/output_3.yaml)
 
 Spend some time at the end to discuss your code, what techniques you used, what worked and why, where the implementation might fail and how you might improve it if you were going to pursue this project further.  
 
