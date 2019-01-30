@@ -350,6 +350,19 @@ Later we added the code to predict the object and label them and publish it back
 
 #### 1. For all three tabletop setups (`test*.world`), perform object recognition, then read in respective pick list (`pick_list_*.yaml`). Next construct the messages that would comprise a valid `PickPlace` request output them to `.yaml` format.
 
+As said in the project that 75 % of the project code is all done in exercise 1 to 3. 
+Following thing needed to be done to run the project successfully
+1. Run the caputre_feature.py and train_svc.py for 3 diffrent worlds to generate model.svc for that revelent world.
+2. Change the world seeting in the launch file for each world.
+3. Add code to project_template.py from exercise 1, 2, 3 and add code to  PR2_Mover function.
+4. Run the project and fine tune the diffrent parameters for this configurations. 
+    a. Change LEAF_SIZE for Voxel Grid Downsampling.
+    b. Change axis_min and asix_max of z and y axix for PassThrough Filter.
+    c. Change max_distance for RANSAC Plane Segmentation.
+    d. Change ClusterTolerance, MinClusterSize and MaxClusterSize for Euclidean Clustering.
+
+Below are the results of test run on diffrent worls set.
+
 Running the 3 worlds tests
 ======
 
@@ -360,6 +373,7 @@ Image of Confusion Matix with Feature Set details.
 Image of Pridicted Objects.
 ![ObjectRecognition]
 Output yaml.
+
 [output_3.yaml](https://github.com/gauravsaxena1983/RoboND-Perception-Project/blob/master/output_yaml/output_3.yaml)
 
 Test World 2
@@ -369,6 +383,7 @@ Image of Confusion Matix with Feature Set details.
 Image of Pridicted Objects.
 ![ObjectRecognition_2]
 Output yaml.
+
 [output_2.yaml](https://github.com/gauravsaxena1983/RoboND-Perception-Project/blob/master/output_yaml/output_2.yaml)
 
 Test World 3
@@ -378,6 +393,7 @@ Image of Confusion Matix with Feature Set details.
 Image of Pridicted Objects.
 ![ObjectRecognition_3]
 Output yaml.
+
 [output_3.yaml](https://github.com/gauravsaxena1983/RoboND-Perception-Project/blob/master/output_yaml/output_3.yaml)
 
 Spend some time at the end to discuss your code, what techniques you used, what worked and why, where the implementation might fail and how you might improve it if you were going to pursue this project further.  
