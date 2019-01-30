@@ -10,6 +10,8 @@
 [exercise_2_point_cloud]: ./images/exercise_2_point_cloud.png
 [exercise_2_point_object]: ./images/exercise_2_point_object.png
 [exercise_2_point_table_new]: ./images/exercise_2_point_table_new.png
+[exercise_3_object_taging]: ./images/exercise_3_object_taging.png
+[exercise_3_tarin_confusion_matrix]: ./images/exercise_3_tarin_confusion_matrix.png
 
 ## Project: Perception Pick & Place
 # Required Steps for a Passing Submission:
@@ -298,10 +300,49 @@ Spining while node is not shutdown
     while not rospy.is_shutdown():
         rospy.spin()
 ```
-#### 2. Complete Exercise 3 Steps.  Features extracted and SVM trained.  Object recognition implemented.
-Here is an example of how to include an image in your writeup.
+#### 3. Complete Exercise 3 Steps.  Features extracted and SVM trained.  Object recognition implemented. [Exercise 3 Code](https://github.com/gauravsaxena1983/RoboND-Perception-Exercises/tree/master/Exercise-3)
+![exercise_3_object_taging][exercise_3_object_taging]
+Below is the additional code used in exercise to find the object and tag it. 
+![exercise_3_tarin_confusion_matrix][exercise_3_tarin_confusion_matrix]
 
-![demo-1](https://user-images.githubusercontent.com/20687560/28748231-46b5b912-7467-11e7-8778-3095172b7b19.png)
+```
+# Exercise-3: 
+
+    # Classify the clusters! (loop through each detected cluster one at a time)
+    detected_objects_labels = []
+    detected_objects = []
+
+    for index, pts_list in enumerate(cluster_indices):
+        # Grab the points for the cluster from the extracted outliers (cloud_objects)
+        pcl_cluster = cloud_objects.extract(pts_list)
+        # TODO: convert the cluster from pcl to ROS using helper function
+        ros_cluster = pcl_to_ros(pcl_cluster)
+
+        # Extract histogram features
+        # TODO: complete this step just as is covered in capture_features.py
+        chists = compute_color_histograms(ros_cluster, using_hsv=True)
+        normals = get_normals(ros_cluster)
+        nhists = compute_normal_histograms(normals)
+        feature = np.concatenate((chists, nhists))
+        #labeled_features.append([feature, model_name])
+
+        # Make the prediction, retrieve the label for the result
+        # and add it to detected_objects_labels list
+        prediction = clf.predict(scaler.transform(feature.reshape(1,-1)))
+        label = encoder.inverse_transform(prediction)[0]
+        detected_objects_labels.append(label)
+
+        # Publish a label into RViz
+        label_pos = list(white_cloud[pts_list[0]])
+        label_pos[2] += .4
+        object_markers_pub.publish(make_label(label,label_pos, index))
+
+        # Add the detected object to the list of detected objects.
+        do = DetectedObject()
+        do.label = label
+        do.cloud = ros_cluster
+        detected_objects.append(do)
+```
 
 ### Pick and Place Setup
 
