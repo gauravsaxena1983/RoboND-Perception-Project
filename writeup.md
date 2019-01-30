@@ -350,8 +350,12 @@ Later we added the code to predict the object and label them and publish it back
 
 #### 1. For all three tabletop setups (`test*.world`), perform object recognition, then read in respective pick list (`pick_list_*.yaml`). Next construct the messages that would comprise a valid `PickPlace` request output them to `.yaml` format.
 
-And here's another image! 
-![demo-2](https://user-images.githubusercontent.com/20687560/28748286-9f65680e-7468-11e7-83dc-f1a32380b89c.png)
+![C-matrix]
+![C-matrix_2]
+![C-matrix_3]
+![ObjectRecognition]
+![ObjectRecognition_2]
+![ObjectRecognition_3]
 
 Spend some time at the end to discuss your code, what techniques you used, what worked and why, where the implementation might fail and how you might improve it if you were going to pursue this project further.  
 
