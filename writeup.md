@@ -301,10 +301,12 @@ Spining while node is not shutdown
         rospy.spin()
 ```
 #### 3. Complete Exercise 3 Steps.  Features extracted and SVM trained.  Object recognition implemented. [Exercise 3 Code](https://github.com/gauravsaxena1983/RoboND-Perception-Exercises/tree/master/Exercise-3)
-![exercise_3_object_taging][exercise_3_object_taging]
-Below is the additional code used in exercise to find the object and tag it. 
+
+In exercise we again fing the features from the models and train the data. 
 ![exercise_3_tarin_confusion_matrix][exercise_3_tarin_confusion_matrix]
 
+Later we added the code to predict the object and label it.
+![exercise_3_object_taging][exercise_3_object_taging]
 ```
 # Exercise-3: 
 
